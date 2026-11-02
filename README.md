@@ -94,6 +94,24 @@ index.html
   policy blocks both local addresses and the file-host domain; the visual
   pass remains the only unrun check.
 
+## QA round 3 (Nov 2, 2026 — live browser test on GitHub Pages)
+
+Published at https://kaleemmedia450-dev.github.io/block-master/ and tested
+in a real browser. Menus, tutorial, Daily calendar, pause/save/continue,
+Themes, Settings and the Adventure map all passed — but the test caught a
+**critical gameplay bug the code tests had missed**: tap-to-place and drag
+anchored pieces by their centre, so tapping a corner or edge cell pushed
+part of the piece outside the board and the move was silently rejected.
+Fixed with `clampAnchor()` (anchors are clamped inside the board for both
+tap and drag), verified by 7 new unit tests and a fresh browser re-test:
+corner tap, right/bottom edge tap, centre tap and drag all place correctly.
+Also fixed from the same report: power-up bar now fits one row (8 buttons),
+tutorial lost its duplicate "Got it" close button, Daily calendar shows a
+month/year label, empty 0-score games no longer create a Continue entry.
+Caution from this round: GitHub Pages caches HTML for ~10 minutes and the
+test browser shared a profile, so the first re-test unknowingly ran the
+stale cached build — always re-test with a cache-busting query string.
+
 ## Privacy
 
 Everything is stored only in the player's own browser local storage.
